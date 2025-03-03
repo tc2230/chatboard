@@ -1,0 +1,35 @@
+services:
+  app:
+    container_name: web-chatboard
+    image: node:20-alpine
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    ports:
+       - "3000:3000"
+    networks:
+      - service-network
+    #expose:
+    #  - "3000"
+    volumes:
+      - ./:/deploy
+    environment:
+      - TZ=Asia/Taipei
+    working_dir: /deploy
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        apk add tzdata
+        apk add nano
+        cd /deploy
+        npm install
+        npm start
+    # command: ["npm", "start"]
+
+networks:
+  service-network:
+    name: service-network
+    driver: bridge
+#    external: true
+
