@@ -1,42 +1,58 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing Chatboard</title>
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatboard</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+  </head>
 
-<body>
+  <body>
     <div id="container-radio">
-        <iframe width="480" height="270" src="https://www.youtube.com/embed/AS_x4uR87Kw?si=yACKSs98XavNPNJ7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <iframe
+        width="480"
+        height="270"
+        src="https://www.youtube.com/embed/AS_x4uR87Kw?si=yACKSs98XavNPNJ7&autoplay=1"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
     </div>
     <div id="container-chatboard">
-        <div id="status-box">Server: <span id="status">-</span> / <span id="online">0</span> online.</div>
-        <div id="board-wrapper">
-            <div id="board">
-                <div id="content">
-                </div>
-            </div>
+      <div id="status-box">
+        Server: <span id="status">-</span> / <span id="online">0</span> online.
+      </div>
+      <div id="board-wrapper">
+        <div id="board">
+          <div id="content"></div>
         </div>
-        <div id="send-box">
-            <form id="send-form">
-                <input type="text" name="user" id="input-user" placeholder="Name">
-                <input type="text" name="msg" id="input-msg" placeholder="say somthing?">
-                <input type="submit" id="input-button" value="送出">
-            </form>
-        </div>
+      </div>
+      <div id="send-box">
+        <form id="send-form">
+          <input type="text" name="user" id="input-user" placeholder="Name" />
+          <input
+            type="text"
+            name="msg"
+            id="input-msg"
+            placeholder="say somthing?"
+          />
+          <input type="submit" id="input-button" value="送出" />
+        </form>
+      </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/cookies.js"></script>
     <script src="scripts/chatroom.js"></script>
     <script>
-        const n =  Math.floor(Math.random() * 50);
-        const img_path = `url("../images/backgrounds/background_${n}.jpg")`;
-        document.documentElement.style.setProperty('--background-image-url', img_path); 
+      const n = Math.floor(Math.random() * 50);
+      const img_path = `url("../images/backgrounds/background_${n}.jpg")`;
+      document.documentElement.style.setProperty(
+        '--background-image-url',
+        img_path,
+      );
     </script>
-</body>
-
+  </body>
 </html>
-

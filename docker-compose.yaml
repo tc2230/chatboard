@@ -2,21 +2,21 @@ services:
   app:
     container_name: web-chatboard
     image: node:20-alpine
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    ports:
-       - "3000:3000"
-    networks:
-      - service-network
-    #expose:
-    #  - "3000"
+    expose:
+      - '4000'
+    # ports:
+    #   - '4000:4000'
     volumes:
       - ./:/deploy
     environment:
       - TZ=Asia/Taipei
+    networks:
+      - service-network
+    depends_on:
+      pgserver:
+        condition: service_healthy
     working_dir: /deploy
-    command: 
+    command:
       - /bin/sh
       - -c
       - |
@@ -27,9 +27,54 @@ services:
         npm start
     # command: ["npm", "start"]
 
+  pgserver:
+    container_name: postgres-server
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres/initdb.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      # PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - service-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    container_name: pgadmin
+    # image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4:9.0.0
+    depends_on:
+      pgserver:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'True'
+      PGADMIN_SERVER_JSON_FILE: '/config/default_connection.json'
+    volumes:
+      - ./postgres/pgadmin:/config
+    networks:
+      - service-network
+    ports:
+      - '5050:80'
+    restart: always
+
+volumes:
+  postgres-data:
+    name: postgres-data
+
 networks:
   service-network:
     name: service-network
     driver: bridge
-#    external: true
-
+    # external: true

@@ -1,0 +1,2 @@
+CREATE DATABASE chatboard;
+GRANT ALL PRIVILEGES ON DATABASE chatboard TO postgres;
