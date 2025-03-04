@@ -1,5 +1,6 @@
 module.exports = {
-  HOST: 'host.docker.internal', // Host Name
+//  HOST: 'host.docker.internal', // Host Name
+  HOST: 'postgres-server',
   PORT: 5432,
   USER: 'postgres', // User Name
   PASSWORD: 'postgres', // Password

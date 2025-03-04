@@ -1,13 +1,16 @@
 services:
   app:
     container_name: web-chatboard
-    image: node:20-alpine
+#    image: node:20-alpine
+    build:
+      dockerfile: ./Dockerfile
+      context: .
     expose:
       - '4000'
     # ports:
     #   - '4000:4000'
-    volumes:
-      - ./:/deploy
+#    volumes:
+#      - ./:/deploy
     environment:
       - TZ=Asia/Taipei
     networks:
@@ -20,11 +23,15 @@ services:
       - /bin/sh
       - -c
       - |
-        apk add tzdata
-        apk add nano
-        cd /deploy
-        npm install
         npm start
+#        echo "test123"
+#        npm install
+#        npm start
+#        apk add tzdata
+#        apk add nano
+#        cd /deploy
+#        npm install
+#        npm start
     # command: ["npm", "start"]
 
   pgserver:
@@ -77,4 +84,4 @@ networks:
   service-network:
     name: service-network
     driver: bridge
-    # external: true
+    external: true
